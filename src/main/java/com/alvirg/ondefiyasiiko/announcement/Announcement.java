@@ -1,4 +1,4 @@
-package com.alvirg.ondefiyasiiko.event;
+package com.alvirg.ondefiyasiiko.announcement;
 
 import com.alvirg.ondefiyasiiko.common.BaseEntity;
 import com.alvirg.ondefiyasiiko.festival.Festival;
@@ -17,25 +17,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "EVENT")
-public class Event extends BaseEntity {
+@Table(name = "ANNOUNCEMENT")
+public class Announcement extends BaseEntity {
 
     @Column(name = "TITLE", nullable = false)
     private String title;
 
-    @Column(name = "DESCRIPTION", nullable = false)
-    private String description;
+    @Column(name = "CONTENT", length = 2000, nullable = false)
+    private String content;
 
-    @Column(name = "START_TIME", nullable = false)
-    private LocalDateTime startTime;
-
-    @Column(name = "END_TIME", nullable = false)
-    private LocalDateTime endTime;
-
-    private String venue;
+    @Column(name = "PUBLISHED_AT", nullable = false)
+    private LocalDateTime publishedAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "festival_id", nullable = false)
     private Festival festival;
-
 }

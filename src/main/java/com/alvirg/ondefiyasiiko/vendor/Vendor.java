@@ -2,6 +2,7 @@ package com.alvirg.ondefiyasiiko.vendor;
 
 import com.alvirg.ondefiyasiiko.common.ApplicationStatus;
 import com.alvirg.ondefiyasiiko.common.BaseEntity;
+import com.alvirg.ondefiyasiiko.festival.Festival;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,4 +33,8 @@ public class Vendor extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private ApplicationStatus status = ApplicationStatus.PENDING;
+
+    @ManyToOne
+    @JoinColumn(name = "festival_id", nullable = false)
+    private Festival festival;
 }

@@ -1,9 +1,8 @@
 package com.alvirg.ondefiyasiiko.volunteer;
 
 import com.alvirg.ondefiyasiiko.common.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.alvirg.ondefiyasiiko.festival.Festival;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,4 +34,9 @@ public class Volunteer extends BaseEntity {
     private String skills;
 
     private String availability;
+
+    @ManyToOne
+    @JoinColumn(name = "festival_id", nullable = false)
+    private Festival festival;
+
 }
