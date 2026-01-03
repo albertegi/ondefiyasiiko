@@ -69,32 +69,26 @@ public class User implements UserDetails {
      * When I load the user, I will automatically load the roles with it.
      */
 
-    @ManyToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            fetch = FetchType.EAGER
-    )
+//    @ManyToMany(
+//            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+//            fetch = FetchType.EAGER
+//    )
 
-    @JoinTable(
-            name = "USERS_ROLES",
-            joinColumns = {
-                    @JoinColumn(name = "USERS_ID")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "ROLES_ID")
-            }
-    )
-    private List<Role> roles;
+//    @JoinTable(
+//            name = "USERS_ROLES",
+//            joinColumns = {
+//                    @JoinColumn(name = "USERS_ID")
+//            },
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "ROLES_ID")
+//            }
+//    )
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(CollectionUtils.isEmpty(this.roles)){
-            return List.of();
-        }
-
-        return this.roles
-                .stream()
-                .map(r-> new SimpleGrantedAuthority(r.getName()))
-                .collect(Collectors.toList());
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
