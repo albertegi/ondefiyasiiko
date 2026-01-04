@@ -6,7 +6,20 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, String> {
 
-    //    @Query(
+
+//    @Query(
+//            value = """
+//                SELECT COUNT(*) > 0
+//                FROM users
+//                WHERE LOWER(email) = LOWER(:email);
+//
+//            """,
+//            nativeQuery = true
+//    )
+    boolean existsByEmailIgnoreCase(String email);
+
+
+//    @Query(
 //            value = """
 //                SELECT COUNT(*) > 0
 //                FROM users
@@ -15,4 +28,14 @@ public interface UserRepository extends JpaRepository<User, String> {
 //            nativeQuery = true
 //    )
     Optional<User> findByEmailIgnoreCase(String email);
+
+//    @Query(
+//            value = """
+//                SELECT COUNT(*) > 0
+//                FROM users
+//                WHERE phone_number = :phoneNumber;
+//            """,
+//            nativeQuery = true
+//    )
+    boolean existsByPhoneNumber(String phoneNumber);
 }
