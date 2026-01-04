@@ -10,6 +10,10 @@ import lombok.*;
 @Builder
 public class AuthenticationResponse {
 
-    @JsonProperty("token")
-    private String token;
+    @JsonProperty("access_token")
+    private String accessToken;
+    @JsonProperty("refresh_token")
+    private String refreshToken;
+    @JsonProperty("token_type")
+    private String tokenType;
 }

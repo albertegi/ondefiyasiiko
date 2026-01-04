@@ -17,11 +17,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
   app:
     security:
       jwt:
         access-token-expiration: 8640000 # 24 hours for local testing, recommend 15 minutes for production
         refresh-token-expiration: 604800000
       disposable-email: 10minutemail,20minutemail,33mail,5ymail,anonbox,guerrilamail,mailinator,yopmail
-

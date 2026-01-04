@@ -2,101 +2,87 @@ package com.alvirg.ondefiyasiiko.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 @Service
-public class JwtService {
+public class JwtService {private static final String TOKEN_TYPE = "token_type";
+    private final PrivateKey privateKey;
+    private final PublicKey publicKey;
 
-    @Value("${application.security.jwt.expiration}")
-    private long jwtExpiration;
+    @Value("${spring.app.security.jwt.access-token-expiration}")
+    private long accessTokenExpiration;
 
-    @Value("${application.security.jwt.secret-key}")
-    private String secretKey;
+    @Value("${spring.app.security.jwt.refresh-token-expiration}")
+    private long refreshTokenExpiration;
 
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+    public JwtService() throws Exception{
+        this.privateKey = KeyUtils.loadPrivateKey("keys/local-only/private_key.pem");
+        this.publicKey = KeyUtils.loadPublicKey("keys/local-only/public_key.pem");
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimResolver){
-        final Claims claims = extractAllClaims(token);
-        return claimResolver.apply(claims);
+    public String generateAccessToken(final String username){
+        final Map<String, Object> claims = Map.of(TOKEN_TYPE, "ACCESS_TOKEN");
+        return buildToken(claims, username, this.accessTokenExpiration);
     }
 
-    private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+    public String generateRefreshToken(final String username){
+        final Map<String, Object> claims = Map.of(TOKEN_TYPE, "REFRESH_TOKEN");
+        return buildToken(claims, username, this.refreshTokenExpiration);
     }
 
-    // generate a token without extra claims. generate only from UserDetails
-    public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
-    }
-
-    public String generateToken(Map<String,Object> claims, UserDetails userDetails) {
-
-        return buildToken(claims, userDetails, jwtExpiration);
-    }
-
-    private String buildToken(
-            Map<String, Object> extraClaims,
-            UserDetails userDetails,
-            long jwtExpiration
-    ) {
-        var authorities = userDetails.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .toList();
-
-        return Jwts
-                .builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+    private String buildToken(final Map<String, Object> claims,
+                              final String username,
+                              final long expiration) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
-                .claim("authorities", authorities)
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(this.privateKey)
                 .compact();
     }
 
-
-
-    public boolean isTokenValid(String token, UserDetails userDetails){
-        final String username = extractUsername(token); // we need the UserDetails to validate if the token right here belongs to this user.
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token); // so check that the username we have in the token is equal to the username in the (UserDetails) which is the input. also check that the token is not expired.
+    public boolean isTokenValid(final String token, final String expectedUsername){
+        final String username = extractUsername(token); // extract the username from the token
+        return username.equals(expectedUsername) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-
+        return extractClaims(token).getExpiration().before(new Date());
     }
 
-    private Date extractExpiration(String token) {
-
-        return extractClaim(token, Claims::getExpiration);
+    public String extractUsername(final String token) {
+        return extractClaims(token).getSubject();
     }
 
+    private Claims extractClaims(final String token) {
 
-    private Key getSignInKey() {
+        try{
+            return Jwts.parserBuilder()
+                    .setSigningKey(this.publicKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (final Exception e) {
+            throw new RuntimeException("Invalid JWT Token",e);
+        }
+    }
 
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
+    public String refreshAccessToken(final String refreshToken){
+        final Claims claims = extractClaims(refreshToken);
+        if(!"REFRESH_TOKEN".equals(claims.get(TOKEN_TYPE))){
+            throw new RuntimeException("invalid token type");
+        }
+        if(isTokenExpired(refreshToken)){
+            throw new RuntimeException("Refresh Token expired");
+        }
+        final String username = claims.getSubject();
+        return generateAccessToken(username);
     }
 }

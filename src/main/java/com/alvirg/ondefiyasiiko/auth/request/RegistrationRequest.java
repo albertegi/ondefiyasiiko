@@ -37,13 +37,13 @@ public class RegistrationRequest {
             regexp = "^[\\p{L} '-]+$",
             message = "VALIDATION.REGISTRATION.LASTNAME.PATTERN"
     )
-    @Schema(example = "Anthony")
+    @Schema(example = "Egi")
     private String lastName;
 
     @NotBlank(message = "VALIDATION.REGISTRATION.EMAIL.NOT_BLANK")
     @Email(message = "VALIDATION.REGISTRATION.EMAIL.FORMAT")
     @NonDisposableEmail(message = "VALIDATION.REGISTRATION.EMAIL.DISPOSABLE")
-    @Schema(example = "albert@email.com")
+    @Schema(example = "albertegi@email.com")
     private String email;
 
     @NotBlank(message = "VALIDATION.REGISTRATION.PHONE.NOT_BLANK")

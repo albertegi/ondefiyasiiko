@@ -1,13 +1,13 @@
 package com.alvirg.ondefiyasiiko.user.impl;
 
-import com.alvirg.employee_recruiter.exception.BusinessException;
-import com.alvirg.employee_recruiter.exception.ErrorCode;
-import com.alvirg.employee_recruiter.user.User;
-import com.alvirg.employee_recruiter.user.UserMapper;
-import com.alvirg.employee_recruiter.user.UserRepository;
-import com.alvirg.employee_recruiter.user.UserService;
-import com.alvirg.employee_recruiter.user.request.ChangePasswordRequest;
-import com.alvirg.employee_recruiter.user.request.ProfileUpdateRequest;
+import com.alvirg.ondefiyasiiko.exception.BusinessException;
+import com.alvirg.ondefiyasiiko.exception.ErrorCode;
+import com.alvirg.ondefiyasiiko.user.User;
+import com.alvirg.ondefiyasiiko.user.UserMapper;
+import com.alvirg.ondefiyasiiko.user.UserRepository;
+import com.alvirg.ondefiyasiiko.user.UserService;
+import com.alvirg.ondefiyasiiko.user.request.ChangePasswordRequest;
+import com.alvirg.ondefiyasiiko.user.request.ProfileUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

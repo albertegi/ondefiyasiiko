@@ -5,6 +5,7 @@ import com.alvirg.ondefiyasiiko.auth.request.RefreshRequest;
 import com.alvirg.ondefiyasiiko.auth.request.RegistrationRequest;
 import com.alvirg.ondefiyasiiko.auth.response.AuthenticationResponse;
 //import com.alvirg.ondefiyasiiko.handler.ErrorResponse;
+import com.alvirg.ondefiyasiiko.handler.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
