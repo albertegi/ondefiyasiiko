@@ -39,7 +39,7 @@ public class Festival extends BaseEntity {
     @Column(name = "LOCATION", nullable = false)
     private String location;
     @Column(name = "YEAR", nullable = false)
-    private int year;
+    private Integer year;
 
     @OneToMany(mappedBy = "festival", cascade = CascadeType.ALL)
     private List<Event> events;
