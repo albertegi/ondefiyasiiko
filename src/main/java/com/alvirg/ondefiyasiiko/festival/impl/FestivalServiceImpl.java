@@ -35,14 +35,14 @@ public class FestivalServiceImpl implements FestivalService {
         return this.festivalRepository.save(festival).getId();
     }
 
-    @Override
-    public void updateFestival(FestivalUpdateRequest request, String userId) {
+//    @Override
+//    public void updateFestival(FestivalUpdateRequest request, String userId) {
+//
+//    }
 
-    }
-
-    @Override
-    public void deleteFestivalById(String todoId) {
-
-    }
+//    @Override
+//    public void deleteFestivalById(String todoId) {
+//
+//    }
 
 }
