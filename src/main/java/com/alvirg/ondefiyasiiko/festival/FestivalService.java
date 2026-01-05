@@ -1,12 +1,11 @@
 package com.alvirg.ondefiyasiiko.festival;
 
 import com.alvirg.ondefiyasiiko.festival.request.FestivalRequest;
-import com.alvirg.ondefiyasiiko.festival.request.FestivalUpdateRequest;
-
-import java.util.List;
+import com.alvirg.ondefiyasiiko.festival.response.FestivalResponse;
 
 public interface FestivalService {
 
     String createOrUpdateFestival(FestivalRequest request, String userId);
-//    void deleteFestivalById(String todoId);
+
+    FestivalResponse findCurrentFestival();
 }

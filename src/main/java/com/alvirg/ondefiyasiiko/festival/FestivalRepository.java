@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface FestivalRepository extends JpaRepository<Festival, String> {
-    Optional<Festival> findFirstByOrderByCreatedByDesc();
+    Optional<Festival> findFirstByOrderByCreatedDateDesc();
 }

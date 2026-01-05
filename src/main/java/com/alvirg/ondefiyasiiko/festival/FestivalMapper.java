@@ -1,13 +1,9 @@
 package com.alvirg.ondefiyasiiko.festival;
 
 import com.alvirg.ondefiyasiiko.festival.request.FestivalRequest;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
+import com.alvirg.ondefiyasiiko.festival.response.FestivalResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 
 @Service
 public class FestivalMapper {
@@ -15,10 +11,12 @@ public class FestivalMapper {
         return Festival.builder()
                 .name(request.getName())
                 .theme(request.getTheme())
-                .description(request.getDescription())
+                .slogan(request.getSlogan())
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .location(request.getLocation())
+                .history(request.getHistory())
+                .culturalSignificance(request.getCulturalSignificance())
                 .year(request.getYear())
                 .build();
     }
@@ -36,21 +34,10 @@ public class FestivalMapper {
             current.setTheme(request.getTheme());
         }
 
-        if(StringUtils.isNotBlank(request.getDescription())
-                && !current.getDescription().equals(request.getDescription())
+        if(StringUtils.isNotBlank(request.getSlogan())
+                && !current.getSlogan().equals(request.getSlogan())
         ){
-            current.setDescription(request.getDescription());
-        }
-
-        if(StringUtils.isNotBlank(request.getLocation())
-                && !current.getLocation().equals(request.getLocation())
-        ){
-            current.setLocation(request.getLocation());
-        }
-
-        if (request.getLocation() != null
-                && !request.getLocation().equals(current.getLocation())) {
-            current.setLocation(request.getLocation());
+            current.setSlogan(request.getSlogan());
         }
 
         if (request.getStartDate() != null
@@ -63,8 +50,38 @@ public class FestivalMapper {
             current.setEndDate(request.getEndDate());
         }
 
+        if(StringUtils.isNotBlank(request.getHistory())
+                && !current.getHistory().equals(request.getHistory())
+        ){
+            current.setHistory(request.getHistory());
+        }
+
+        if(StringUtils.isNotBlank(request.getCulturalSignificance())
+                && !current.getCulturalSignificance().equals(request.getCulturalSignificance())
+        ){
+            current.setCulturalSignificance(request.getCulturalSignificance());
+        }
 
 
+        if (request.getYear() != current.getYear()) {
+            current.setYear(request.getYear());
+        }
 
+    }
+
+    public FestivalResponse toFestivalResponse(final Festival festival)
+    {
+        return FestivalResponse.builder()
+                .id(festival.getId())
+                .name(festival.getName())
+                .theme(festival.getTheme())
+                .slogan(festival.getSlogan())
+                .startDate(festival.getStartDate())
+                .endDate(festival.getEndDate())
+                .location(festival.getLocation())
+                .history(festival.getHistory())
+                .culturalSignificance(festival.getCulturalSignificance())
+                .year(festival.getYear())
+                .build();
     }
 }

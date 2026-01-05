@@ -28,16 +28,28 @@ public class Festival extends BaseEntity {
 
     @Column(name = "NAME", nullable = false)
     private String name;
+
     @Column(name = "THEME", nullable = false)
     private String theme;
-    @Column(name = "DESCRIPTION", nullable = false)
-    private String description;
+
+    @Column(name = "SLOGAN", length = 2000, nullable = false)
+    private String slogan;
+
     @Column(name = "START_DATE", nullable = false)
     private LocalDate startDate;
+
     @Column(name = "END_DATE", nullable = false)
     private LocalDate endDate;
+
     @Column(name = "LOCATION", nullable = false)
     private String location;
+
+    @Column(name = "HISTORY", length = 5000, nullable = false)
+    private String history;
+
+    @Column(name = "CULTURAL_SIGNIFICANCE", length = 5000, nullable = false)
+    private String culturalSignificance;
+
     @Column(name = "YEAR", nullable = false)
     private Integer year;
 

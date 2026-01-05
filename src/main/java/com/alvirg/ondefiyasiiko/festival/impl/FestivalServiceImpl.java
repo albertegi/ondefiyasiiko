@@ -5,9 +5,9 @@ import com.alvirg.ondefiyasiiko.festival.FestivalMapper;
 import com.alvirg.ondefiyasiiko.festival.FestivalRepository;
 import com.alvirg.ondefiyasiiko.festival.FestivalService;
 import com.alvirg.ondefiyasiiko.festival.request.FestivalRequest;
-import com.alvirg.ondefiyasiiko.festival.request.FestivalUpdateRequest;
+import com.alvirg.ondefiyasiiko.festival.response.FestivalResponse;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,7 +23,7 @@ public class FestivalServiceImpl implements FestivalService {
     public String createOrUpdateFestival(FestivalRequest request, String userId) {
         // check that the festival does not already exist
 
-        Optional<Festival> existing = this.festivalRepository.findFirstByOrderByCreatedByDesc();
+        Optional<Festival> existing = this.festivalRepository.findFirstByOrderByCreatedDateDesc();
 
         if(existing.isPresent()){
             // perform update here
@@ -35,14 +35,12 @@ public class FestivalServiceImpl implements FestivalService {
         return this.festivalRepository.save(festival).getId();
     }
 
-//    @Override
-//    public void updateFestival(FestivalUpdateRequest request, String userId) {
-//
-//    }
+    @Override
+    public FestivalResponse findCurrentFestival() {
+        return this.festivalRepository.findFirstByOrderByCreatedDateDesc()
+                .map(this.festivalMapper::toFestivalResponse)
+                .orElseThrow(()-> new EntityNotFoundException("Festival not found!"));
+    }
 
-//    @Override
-//    public void deleteFestivalById(String todoId) {
-//
-//    }
 
 }
