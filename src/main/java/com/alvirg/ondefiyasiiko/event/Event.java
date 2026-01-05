@@ -32,6 +32,15 @@ public class Event extends BaseEntity {
     @Column(name = "END_TIME", nullable = false)
     private LocalDateTime endTime;
 
+    @Column(name = "STAGE", nullable = false)
+    private String stage;
+
+    @Column(name = "EVENT_TYPE", nullable = false)
+    private String eventType;
+
+    @Column(name = "PERFORMER", nullable = false)
+    private String performer;
+
     private String venue;
 
     @ManyToOne
