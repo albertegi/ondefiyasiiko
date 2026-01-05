@@ -32,7 +32,7 @@ public class FestivalController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new RestResponse(festivalId));
     }
 
-    @GetMapping
+    @GetMapping("/current")
     public ResponseEntity<FestivalResponse> findCurrentFestival(){
         return ResponseEntity.ok(this.festivalService.findCurrentFestival());
     }
