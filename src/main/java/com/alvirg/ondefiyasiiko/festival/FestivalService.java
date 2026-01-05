@@ -8,6 +8,5 @@ import java.util.List;
 public interface FestivalService {
 
     String createOrUpdateFestival(FestivalRequest request, String userId);
-    void updateFestival(FestivalUpdateRequest request, String userId);
     void deleteFestivalById(String todoId);
 }
