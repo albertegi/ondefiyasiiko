@@ -59,4 +59,9 @@ public class EventServiceImpl implements EventService {
                 .toList();
     }
 
+    @Override
+    public void deleteEvent(String eventId) {
+        this.eventRepository.deleteById(eventId);
+    }
+
 }
