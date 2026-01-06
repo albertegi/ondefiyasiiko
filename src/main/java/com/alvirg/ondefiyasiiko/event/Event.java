@@ -17,7 +17,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "EVENT")
+@Table(name = "EVENT",
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = {"TITLE", "START_TIME", "CREATED_BY"}
+        )
+)
+
 public class Event extends BaseEntity {
 
     @Column(name = "TITLE", nullable = false)
