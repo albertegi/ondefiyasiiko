@@ -44,6 +44,14 @@ public class EventServiceImpl implements EventService {
         this.eventRepository.save(eventToUpdate);
     }
 
+    @Override
+    public EventResponse getEventById(final String eventId) {
+        return this.eventRepository.findById(eventId)
+                .map(this.eventMapper::toEventResponse)
+                .orElseThrow(()-> new EntityNotFoundException("No event found with the ID " + eventId
+                ));
+    }
+
 
 //    private Event checkAndReturnEvent(String eventId) {
 //        return this.eventRepository.findById(eventId)
