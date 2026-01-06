@@ -35,6 +35,15 @@ public class EventServiceImpl implements EventService {
         }
     }
 
+    @Override
+    public void updateEvent(EventRequest request, String userId) {
+        final Event eventToUpdate = this.eventRepository.findById(userId)
+                .orElseThrow(()-> new EntityNotFoundException("No Event found with Id: " +userId));
+
+        this.eventMapper.applyUpdate(eventToUpdate, request);
+        this.eventRepository.save(eventToUpdate);
+    }
+
 
 //    private Event checkAndReturnEvent(String eventId) {
 //        return this.eventRepository.findById(eventId)
