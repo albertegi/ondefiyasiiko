@@ -60,6 +60,14 @@ public class EventController {
             @PathVariable("event-id") @P("eventId")
             String eventId){
         return ResponseEntity.ok(this.eventService.getEventById(eventId));
+    }
+
+    @DeleteMapping("/{event-id}")
+    public ResponseEntity<Void> deleteTodoById(
+            @PathVariable("event-id") @P("eventId")
+            final String eventId){
+        this.eventService.deleteEvent(eventId);
+        return ResponseEntity.ok().build();
 
     }
 
