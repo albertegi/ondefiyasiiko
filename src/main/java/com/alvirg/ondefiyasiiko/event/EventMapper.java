@@ -1,6 +1,7 @@
 package com.alvirg.ondefiyasiiko.event;
 
 import com.alvirg.ondefiyasiiko.event.request.EventRequest;
+import com.alvirg.ondefiyasiiko.event.request.EventUpdateRequest;
 import com.alvirg.ondefiyasiiko.event.response.EventResponse;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +36,7 @@ public class EventMapper {
                 .build();
     }
 
-    public void applyUpdate(Event eventToUpdate, EventRequest request) {
+    public void applyUpdate(Event eventToUpdate, EventUpdateRequest request) {
         if(StringUtils.isNotBlank(request.getTitle()) &&
         !eventToUpdate.getTitle().equals(request.getTitle())){
             eventToUpdate.setTitle(request.getTitle());

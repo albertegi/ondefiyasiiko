@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EventUpdate {
+public class EventUpdateRequest {
 
     @NotBlank(message = "VALIDATION.EVENT.TITLE.NOT_BLANK")
     private String title;

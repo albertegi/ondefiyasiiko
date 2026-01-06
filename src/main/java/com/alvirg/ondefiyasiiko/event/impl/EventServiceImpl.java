@@ -5,6 +5,7 @@ import com.alvirg.ondefiyasiiko.event.EventMapper;
 import com.alvirg.ondefiyasiiko.event.EventRepository;
 import com.alvirg.ondefiyasiiko.event.EventService;
 import com.alvirg.ondefiyasiiko.event.request.EventRequest;
+import com.alvirg.ondefiyasiiko.event.request.EventUpdateRequest;
 import com.alvirg.ondefiyasiiko.event.response.EventResponse;
 import com.alvirg.ondefiyasiiko.exception.BusinessException;
 import com.alvirg.ondefiyasiiko.exception.ErrorCode;
@@ -36,7 +37,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void updateEvent(EventRequest request, String userId) {
+    public void updateEvent(EventUpdateRequest request, String userId) {
         final Event eventToUpdate = this.eventRepository.findById(userId)
                 .orElseThrow(()-> new EntityNotFoundException("No Event found with Id: " +userId));
 

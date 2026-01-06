@@ -2,6 +2,7 @@ package com.alvirg.ondefiyasiiko.event;
 
 import com.alvirg.ondefiyasiiko.common.RestResponse;
 import com.alvirg.ondefiyasiiko.event.request.EventRequest;
+import com.alvirg.ondefiyasiiko.event.request.EventUpdateRequest;
 import com.alvirg.ondefiyasiiko.event.response.EventResponse;
 import com.alvirg.ondefiyasiiko.user.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,6 +35,19 @@ public class EventController {
         String userId = ((User)authentication.getPrincipal()).getId();
         final String eventId = this.eventService.createEvent(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(new RestResponse(eventId));
+    }
+
+    @PutMapping("/{event-id}")
+    public ResponseEntity<Void> updateEvent(
+            @Valid
+            @RequestBody
+            final EventUpdateRequest request,
+            @PathVariable("event-id") @P("eventId")
+            final String eventId,
+            final Authentication authentication){
+        String userId = ((User)authentication.getPrincipal()).getId();
+        this.eventService.updateEvent(request, userId);
+        return ResponseEntity.accepted().build();
     }
 
     @GetMapping
