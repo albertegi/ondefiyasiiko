@@ -32,7 +32,7 @@ public class EventController {
             final EventRequest request,
             final Authentication authentication){
 
-        String userId = ((User)authentication.getPrincipal()).getId();
+//        String userId = ((User)authentication.getPrincipal()).getId();
         final String eventId = this.eventService.createEvent(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(new RestResponse(eventId));
     }
