@@ -41,6 +41,7 @@ public class Event extends BaseEntity {
     @Column(name = "PERFORMER", nullable = false)
     private String performer;
 
+    @Column(name = "VENUE", nullable = false)
     private String venue;
 
     @ManyToOne
