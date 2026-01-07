@@ -21,12 +21,12 @@ public class EventRequest {
     @NotBlank(message = "VALIDATION.EVENT.DESCRIPTION.NOT_BLANK")
     private String description;
 
-    @NotNull(message = "VALIDATION.EVENT.START_DATE.NOT_NULL")
-    @FutureOrPresent(message = "VALIDATION.EVENT.START_DATE.FUTURE_OR_PRESENT")
+    @NotNull(message = "VALIDATION.EVENT.START_TIME.NOT_NULL")
+    @FutureOrPresent(message = "VALIDATION.EVENT.START_TIME.FUTURE_OR_PRESENT")
     private LocalDateTime startTime;
 
-    @NotNull(message = "VALIDATION.EVENT.END_DATE.NOT_NULL")
-    @FutureOrPresent(message = "VALIDATION.EVENT.END_DATE.FUTURE_OR_PRESENT")
+    @NotNull(message = "VALIDATION.EVENT.END_TIME.NOT_NULL")
+    @FutureOrPresent(message = "VALIDATION.EVENT.END_TIME.FUTURE_OR_PRESENT")
     private LocalDateTime endTime;
 
     @NotBlank(message = "VALIDATION.EVENT.STAGE.NOT_BLANK")
