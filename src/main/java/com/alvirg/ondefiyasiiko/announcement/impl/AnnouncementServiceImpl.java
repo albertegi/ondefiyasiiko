@@ -74,6 +74,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public void deleteAnnouncement(String AnnouncementId) {
+        this.announcementRepository.deleteById(AnnouncementId);
 
     }
 }
