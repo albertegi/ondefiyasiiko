@@ -66,7 +66,10 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public List<AnnouncementResponse> getAllAnnouncement() {
-        return List.of();
+        return this.announcementRepository.findAllByOrderByCreatedDateDesc()
+                .stream()
+                .map(this.announcementMapper::toAnnouncementResponse)
+                .toList();
     }
 
     @Override
