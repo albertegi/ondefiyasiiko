@@ -59,7 +59,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public AnnouncementResponse getAnnouncementById(String announcementId) {
-        return null;
+        return this.announcementRepository.findById(announcementId)
+                .map(this.announcementMapper::toAnnouncementResponse)
+                .orElseThrow(()-> new BusinessException(ErrorCode.ANNOUNCEMENT_NOT_FOUND));
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.alvirg.ondefiyasiiko.announcement;
 
 import com.alvirg.ondefiyasiiko.announcement.request.AnnouncementRequest;
 import com.alvirg.ondefiyasiiko.announcement.request.AnnouncementUpdateRequest;
+import com.alvirg.ondefiyasiiko.announcement.response.AnnouncementResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -13,17 +14,6 @@ import java.time.LocalDateTime;
 
 @Service
 public class AnnouncementMapper {
-
-    @NotBlank(message = "VALIDATION.ANNOUNCEMENT.TITLE.NOT_BLANK")
-    private String title;
-
-    @NotBlank(message = "VALIDATION.ANNOUNCEMENT.CONTENT.NOT_BLANK")
-    private String content;
-
-    @NotNull(message = "VALIDATION.ANNOUNCEMENT.PUBLISHED_AT.NOT_NULL")
-    @FutureOrPresent(message = "VALIDATION.ANNOUNCEMENT.PUBLISHED_AT.FUTURE_OR_PRESENT")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime publishedAt;
 
 
     public Announcement toAnnouncement(AnnouncementRequest request) {
@@ -48,5 +38,14 @@ public class AnnouncementMapper {
                 && !request.getPublishedAt().equals(announcementToUpdate.getPublishedAt())) {
             announcementToUpdate.setPublishedAt(request.getPublishedAt());
         }
+    }
+
+    public AnnouncementResponse toAnnouncementResponse(Announcement announcement) {
+        return AnnouncementResponse.builder()
+                .id(announcement.getId())
+                .title(announcement.getTitle())
+                .content(announcement.getContent())
+                .publishedAt(announcement.getPublishedAt())
+                .build();
     }
 }
