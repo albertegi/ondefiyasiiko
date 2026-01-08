@@ -10,7 +10,7 @@ import com.alvirg.ondefiyasiiko.event.response.EventResponse;
 import java.util.List;
 
 public interface AnnouncementService {
-    String createAnnouncement(AnnouncementRequest request);
+    String createAnnouncement(AnnouncementRequest request, String festivalId);
     void updateAnnouncement(AnnouncementUpdateRequest request, String userId);
     AnnouncementResponse getAnnouncementById(String announcementId);
     List<AnnouncementResponse> getAllAnnouncement();

@@ -38,7 +38,7 @@ public class EventMapper {
                 .build();
     }
 
-    public void applyUpdate(Event eventToUpdate, EventUpdateRequest request) {
+    public void applyEventUpdate(Event eventToUpdate, EventUpdateRequest request) {
         if(StringUtils.isNotBlank(request.getTitle()) &&
         !eventToUpdate.getTitle().equals(request.getTitle())){
             eventToUpdate.setTitle(request.getTitle());

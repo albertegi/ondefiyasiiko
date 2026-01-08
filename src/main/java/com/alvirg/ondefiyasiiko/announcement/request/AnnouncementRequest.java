@@ -8,9 +8,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class AnnouncementRequest {
 
     @NotBlank(message = "VALIDATION.ANNOUNCEMENT.TITLE.NOT_BLANK")
