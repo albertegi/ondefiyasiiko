@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Getter
@@ -17,10 +18,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "EVENT",
-        uniqueConstraints = @UniqueConstraint(
-                columnNames = {"TITLE", "START_TIME", "CREATED_BY"}
-        )
+@Table(name = "EVENT"
+//        uniqueConstraints = @UniqueConstraint(
+//                columnNames = {"TITLE", "START_TIME"}
+//        )
 )
 
 public class Event extends BaseEntity {

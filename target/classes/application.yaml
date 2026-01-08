@@ -1,4 +1,6 @@
 spring:
+  jackson:
+    time-zone: UTC
   application:
     name: ondefiyasiiko
   config:
@@ -16,6 +18,9 @@ spring:
     show-sql: false
     properties:
       hibernate:
+        jdbc:
+          time_zone: UTC
+
         format_sql: true
   app:
     security:

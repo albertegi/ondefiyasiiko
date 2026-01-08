@@ -18,6 +18,7 @@ public class EventMapper {
                 .description(event.getDescription())
                 .startTime(event.getStartTime())
                 .endTime(event.getEndTime())
+                .stage(event.getStage())
                 .eventType(event.getEventType())
                 .performer(event.getPerformer())
                 .venue(event.getVenue())
@@ -30,6 +31,7 @@ public class EventMapper {
                 .description(request.getDescription())
                 .startTime(request.getStartTime())
                 .endTime(request.getEndTime())
+                .stage(request.getStage())
                 .eventType(request.getEventType())
                 .performer(request.getPerformer())
                 .venue(request.getVenue())
@@ -56,6 +58,11 @@ public class EventMapper {
             eventToUpdate.setEndTime(request.getEndTime());
         }
 
+        }
+
+        if(StringUtils.isNotBlank(request.getStage()) &&
+        !eventToUpdate.getStage().equals(request.getStage())){
+            eventToUpdate.setStage(request.getStage());
         }
 
         if(StringUtils.isNotBlank(request.getEventType()) &&

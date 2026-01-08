@@ -9,11 +9,14 @@ import com.alvirg.ondefiyasiiko.event.request.EventUpdateRequest;
 import com.alvirg.ondefiyasiiko.event.response.EventResponse;
 import com.alvirg.ondefiyasiiko.exception.BusinessException;
 import com.alvirg.ondefiyasiiko.exception.ErrorCode;
+import com.alvirg.ondefiyasiiko.festival.Festival;
+import com.alvirg.ondefiyasiiko.festival.FestivalRepository;
 import com.alvirg.ondefiyasiiko.festival.FestivalService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,18 +25,26 @@ import java.util.List;
 public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
+    private final FestivalRepository festivalRepository;
     private final EventMapper eventMapper;
 
 
     @Override
+    @Transactional
     public String createEvent(EventRequest request) {
-        final Event event = this.eventMapper.toEvent(request);
-
-        try{
-            return this.eventRepository.save(event).getId();
-        } catch (DataIntegrityViolationException exp) {
+        if(this.eventRepository.existsByTitleAndStartTime(
+                request.getTitle(), request.getStartTime()
+        )){
             throw new BusinessException(ErrorCode.EVENT_ALREADY_EXISTS);
         }
+
+        final Festival festival = this.festivalRepository.findFirstByOrderByCreatedDateDesc()
+                .orElseThrow(()-> new BusinessException(ErrorCode.FESTIVAL_NOT_FOUND));
+
+        final Event event = this.eventMapper.toEvent(request);
+
+        event.setFestival(festival);
+        return this.eventRepository.save(event).getId();
     }
 
     @Override
