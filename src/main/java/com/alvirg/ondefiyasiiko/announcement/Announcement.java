@@ -2,6 +2,7 @@ package com.alvirg.ondefiyasiiko.announcement;
 
 import com.alvirg.ondefiyasiiko.common.BaseEntity;
 import com.alvirg.ondefiyasiiko.festival.Festival;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

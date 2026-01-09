@@ -24,7 +24,8 @@ public enum ErrorCode {
     CATEGORY_ALREADY_EXISTS_FOR_USER("CATEGORY_ALREADY_EXISTS_FOR_USER", "Category already exists for this user", HttpStatus.CONFLICT),
     EVENT_ALREADY_EXISTS("EVENT_ALREADY_EXISTS", "Event already exists", HttpStatus.BAD_REQUEST ),
     FESTIVAL_NOT_FOUND("FESTIVAL_NOT_FOUND","Festival not found", HttpStatus.NOT_FOUND ),
-    ANNOUNCEMENT_NOT_FOUND("ANNOUNCEMENT_NOT_FOUND", "Announcement not found", HttpStatus.NOT_FOUND);
+    ANNOUNCEMENT_NOT_FOUND("ANNOUNCEMENT_NOT_FOUND", "Announcement not found", HttpStatus.NOT_FOUND),
+    ANNOUNCEMENT_ALREADY_EXISTS("ANNOUNCEMENT_ALREADY_EXISTS", "Announcement already exists", HttpStatus.BAD_REQUEST);
 //    EVENT_ALREADY_EXISTS("EVENT_ALREADY_EXISTS","Event already exists", HttpStatus.BAD_REQUEST);
 
 

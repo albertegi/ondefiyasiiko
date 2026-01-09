@@ -27,5 +27,5 @@ public class AnnouncementUpdateRequest {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime publishedAt;
 
-    private Festival festival;
+    private String festivalId;
 }

@@ -17,17 +17,17 @@ public class OndefiyasiikoApplication {
 		SpringApplication.run(OndefiyasiikoApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner runner(RoleRepository roleRepository){
-		return args -> {
-			final Optional<Role> userRole = roleRepository.findByName("USER_ROLE");
-			if(userRole.isEmpty()){
-				final Role role = new Role();
-				role.setName("ROLE_USER");
-				role.setCreatedBy("APP");
-				roleRepository.save(role);
-			}
-		};
-	}
+//	@Bean
+//	public CommandLineRunner runner(RoleRepository roleRepository){
+//		return args -> {
+//			final Optional<Role> userRole = roleRepository.findByName("USER_ROLE");
+//			if(userRole.isEmpty()){
+//				final Role role = new Role();
+//				role.setName("ROLE_USER");
+//				role.setCreatedBy("APP");
+//				roleRepository.save(role);
+//			}
+//		};
+//	}
 
 }
