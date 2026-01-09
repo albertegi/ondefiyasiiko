@@ -48,13 +48,11 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public void updateAnnouncement(AnnouncementUpdateRequest request, String userId) {
-
         final Announcement AnnouncementToUpdate = this.announcementRepository.findById(userId)
                 .orElseThrow(()-> new BusinessException(ErrorCode.ANNOUNCEMENT_NOT_FOUND));
 
         this.announcementMapper.applyAnnouncementUpdate(AnnouncementToUpdate, request);
         this.announcementRepository.save(AnnouncementToUpdate);
-
     }
 
     @Override
@@ -75,6 +73,5 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @Override
     public void deleteAnnouncement(String AnnouncementId) {
         this.announcementRepository.deleteById(AnnouncementId);
-
     }
 }
