@@ -39,12 +39,12 @@ public class AnnouncementController {
                 .body(new RestResponse(announcementId));
     }
 
-    @PutMapping("/{announcementId}")
+    @PutMapping("/{announcement-id}")
 //    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> updateAnnouncement(
             @Valid @RequestBody
             final AnnouncementUpdateRequest request,
-            @PathVariable @P("announcementId")
+            @PathVariable("announcement-id") @P("announcementId")
             final String announcementId
     ) {
         this.announcementService.updateAnnouncement(
