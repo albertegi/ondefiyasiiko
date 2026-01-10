@@ -21,14 +21,12 @@ public class AnnouncementController {
 
     private final AnnouncementService announcementService;
 
-    @PostMapping("/{festivalId}/announcements")
+    @PostMapping
     //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RestResponse> createAnnouncement(
             @Valid
             @RequestBody
-            final AnnouncementRequest request,
-            @PathVariable @P("festivalId")
-            final String festivalId
+            final AnnouncementRequest request
             ){
 
         final String announcementId = this.announcementService.createAnnouncement(request);
@@ -37,20 +35,17 @@ public class AnnouncementController {
                 .body(new RestResponse(announcementId));
     }
 
-    @PutMapping("/{festivalId}/announcements/{announcementId}")
+    @PutMapping("/{announcementId}")
 //    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> updateAnnouncement(
             @Valid @RequestBody
             final AnnouncementUpdateRequest request,
             @PathVariable @P("announcementId")
-            final String announcementId,
-            @PathVariable @P("festivalId")
-            final String festivalId
+            final String announcementId
     ) {
         this.announcementService.updateAnnouncement(
                 request,
-                announcementId,
-                festivalId
+                announcementId
         );
         return ResponseEntity.accepted().build();
     }

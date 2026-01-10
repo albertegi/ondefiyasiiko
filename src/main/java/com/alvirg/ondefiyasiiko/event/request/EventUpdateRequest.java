@@ -45,4 +45,6 @@ public class EventUpdateRequest {
 
     @NotBlank(message = "VALIDATION.EVENT.VENUE.NOT_BLANK")
     private String venue;
+
+    private String festivalId; // since an event belongs to a festival
 }

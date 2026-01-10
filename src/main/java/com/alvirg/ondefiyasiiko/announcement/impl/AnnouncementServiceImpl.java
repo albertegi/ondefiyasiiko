@@ -30,13 +30,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @Override
     @Transactional
     public String createAnnouncement(AnnouncementRequest request) {
-
-//        if(this.announcementRepository.findByTitleAndContent(
-//                request.getTitle(),
-//                request.getContent()
-//        )){
-//            throw new BusinessException(ErrorCode.EVENT_ALREADY_EXISTS);
-//        }
         final Festival festival = this.festivalRepository.findById(request.getFestivalId())
                 .orElseThrow(()-> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
@@ -48,8 +41,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @Override
     public void updateAnnouncement(
             final AnnouncementUpdateRequest request,
-            final String announcementId,
-            final String festivalId) {
+            final String announcementId) {
 
         Festival festival = festivalRepository.findById(request.getFestivalId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.FESTIVAL_NOT_FOUND));
@@ -65,27 +57,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                         request.getContent(),
                         announcementId
                 );
-
         if (existsDuplicate) {
             throw new BusinessException(ErrorCode.ANNOUNCEMENT_ALREADY_EXISTS);
         }
-
         this.announcementMapper.applyAnnouncementUpdate(announcementToUpdate, request);
         this.announcementRepository.save(announcementToUpdate);
-
-
-
     }
-
-
-//    @Override
-//    public void updateAnnouncement(AnnouncementUpdateRequest request, String userId) {
-//        final Announcement AnnouncementToUpdate = this.announcementRepository.findById(userId)
-//                .orElseThrow(()-> new BusinessException(ErrorCode.ANNOUNCEMENT_NOT_FOUND));
-//
-//        this.announcementMapper.applyAnnouncementUpdate(AnnouncementToUpdate, request);
-//        this.announcementRepository.save(AnnouncementToUpdate);
-//    }
 
     @Override
     public AnnouncementResponse getAnnouncementById(String announcementId) {

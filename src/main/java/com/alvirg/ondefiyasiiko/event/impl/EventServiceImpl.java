@@ -38,7 +38,7 @@ public class EventServiceImpl implements EventService {
             throw new BusinessException(ErrorCode.EVENT_ALREADY_EXISTS);
         }
 
-        final Festival festival = this.festivalRepository.findFirstByOrderByCreatedDateDesc()
+        final Festival festival = this.festivalRepository.findById(request.getFestivalId())
                 .orElseThrow(()-> new BusinessException(ErrorCode.FESTIVAL_NOT_FOUND));
 
         final Event event = this.eventMapper.toEvent(request);
@@ -48,9 +48,15 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void updateEvent(EventUpdateRequest request, String userId) {
-        final Event eventToUpdate = this.eventRepository.findById(userId)
-                .orElseThrow(()-> new EntityNotFoundException("No Event found with Id: " +userId));
+    public void updateEvent(
+            final EventUpdateRequest request,
+            final String eventId) {
+
+        Festival festival = festivalRepository.findById(request.getFestivalId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.FESTIVAL_NOT_FOUND));
+
+        final Event eventToUpdate = this.eventRepository.findByIdAndFestival(eventId, festival)
+                .orElseThrow(()-> new BusinessException(ErrorCode.EVENT_NOT_FOUND));
 
         this.eventMapper.applyEventUpdate(eventToUpdate, request);
         this.eventRepository.save(eventToUpdate);

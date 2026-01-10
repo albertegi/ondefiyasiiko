@@ -29,10 +29,8 @@ public class EventController {
     public ResponseEntity<RestResponse>createEvent(
             @Valid
             @RequestBody
-            final EventRequest request,
-            final Authentication authentication){
+            final EventRequest request){
 
-//        String userId = ((User)authentication.getPrincipal()).getId();
         final String eventId = this.eventService.createEvent(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(new RestResponse(eventId));
     }
@@ -43,10 +41,11 @@ public class EventController {
             @RequestBody
             final EventUpdateRequest request,
             @PathVariable("event-id") @P("eventId")
-            final String eventId,
-            final Authentication authentication){
-        String userId = ((User)authentication.getPrincipal()).getId();
-        this.eventService.updateEvent(request, userId);
+            final String eventId){
+        this.eventService.updateEvent(
+                request,
+                eventId
+        );
         return ResponseEntity.accepted().build();
     }
 

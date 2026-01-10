@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AnnouncementService {
     String createAnnouncement(AnnouncementRequest request);
-    void updateAnnouncement(AnnouncementUpdateRequest request, String announcementId,String festivalId);
+    void updateAnnouncement(AnnouncementUpdateRequest request, String announcementId);
     AnnouncementResponse getAnnouncementById(String announcementId);
     List<AnnouncementResponse> getAllAnnouncement();
     void deleteAnnouncement(String AnnouncementId);
