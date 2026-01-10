@@ -10,7 +10,7 @@ import java.util.List;
 public interface EventService {
     String createEvent(EventRequest request);
     void updateEvent(EventUpdateRequest request, String eventId);
-    EventResponse getEventById(String eventId);
+    EventResponse getEventById(String eventId, String festivalId);
     List<EventResponse> getAllEvents();
     void deleteEvent(String eventId);
 }
