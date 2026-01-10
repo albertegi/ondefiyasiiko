@@ -1,5 +1,6 @@
 package com.alvirg.ondefiyasiiko.auth;
 
+import com.alvirg.ondefiyasiiko.apidocs.RegisterUserDocs;
 import com.alvirg.ondefiyasiiko.auth.request.AuthenticationRequest;
 import com.alvirg.ondefiyasiiko.auth.request.RefreshRequest;
 import com.alvirg.ondefiyasiiko.auth.request.RegistrationRequest;
@@ -39,21 +40,8 @@ public class AuthenticationController {
         return ResponseEntity.ok(this.authenticationService.login(request));
     }
 
-    @Operation(summary = "Register a new user", description = "Register a new user with email, password, and other required information")
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "User successfully registered"
-            ),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "Validation error - Invalid input data",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class)
-                    )
-            )
-    })
+
+    @RegisterUserDocs
     @PostMapping("/register")
     public ResponseEntity<Void> register(
             @Valid

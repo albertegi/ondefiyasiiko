@@ -91,7 +91,6 @@ public class EventServiceImpl implements EventService {
     public List<EventResponse> getAllEventsByFestival(
             String festivalId
     ) {
-
         Festival festival = festivalRepository.findById(festivalId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.FESTIVAL_NOT_FOUND));
 

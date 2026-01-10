@@ -17,7 +17,7 @@ public interface EventRepository extends JpaRepository<Event, String> {
 
     Optional<Event> findByIdAndFestival(String eventId, Festival festivalId);
 
-    Optional<Event> findAllByOrderByCreatedDateDesc(Festival festival);
+    List<Event> findAllByOrderByCreatedDateDesc(Festival festival);
 
 
 //    @Query("""

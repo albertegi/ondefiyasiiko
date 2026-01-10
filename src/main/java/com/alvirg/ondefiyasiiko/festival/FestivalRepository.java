@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface FestivalRepository extends JpaRepository<Festival, String> {
     Optional<Festival> findFirstByOrderByCreatedDateDesc();
 
-    Optional<Festival> findByIdAndFestivalId(String announcementId, String festivalId);
+//    Optional<Festival> findByIdAndFestivalId(String announcementId, String festivalId);
 }
