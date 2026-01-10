@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,8 @@ public interface EventRepository extends JpaRepository<Event, String> {
     boolean existsByTitleAndStartTime(String title, LocalDateTime startTime);
 
     Optional<Event> findByIdAndFestival(String eventId, Festival festivalId);
+
+    Optional<Event> findAllByOrderByCreatedDateDesc(Festival festival);
 
 
 //    @Query("""

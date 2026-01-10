@@ -1,5 +1,6 @@
 package com.alvirg.ondefiyasiiko.event;
 
+import com.alvirg.ondefiyasiiko.announcement.response.AnnouncementResponse;
 import com.alvirg.ondefiyasiiko.event.request.EventRequest;
 import com.alvirg.ondefiyasiiko.event.request.EventUpdateRequest;
 import com.alvirg.ondefiyasiiko.event.response.EventResponse;
@@ -12,5 +13,6 @@ public interface EventService {
     void updateEvent(EventUpdateRequest request, String eventId);
     EventResponse getEventById(String eventId, String festivalId);
     List<EventResponse> getAllEvents();
-    void deleteEvent(String eventId);
+    List<EventResponse> getAllEventsByFestival(String festivalId);
+    void deleteEvent(String festivalId, String eventId);
 }

@@ -1,5 +1,7 @@
 package com.alvirg.ondefiyasiiko.event.impl;
 
+import com.alvirg.ondefiyasiiko.announcement.Announcement;
+import com.alvirg.ondefiyasiiko.announcement.response.AnnouncementResponse;
 import com.alvirg.ondefiyasiiko.event.Event;
 import com.alvirg.ondefiyasiiko.event.EventMapper;
 import com.alvirg.ondefiyasiiko.event.EventRepository;
@@ -83,9 +85,38 @@ public class EventServiceImpl implements EventService {
                 .toList();
     }
 
+
     @Override
-    public void deleteEvent(String eventId) {
-        this.eventRepository.deleteById(eventId);
+    @Transactional(readOnly = true)
+    public List<EventResponse> getAllEventsByFestival(
+            String festivalId
+    ) {
+
+        Festival festival = festivalRepository.findById(festivalId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.FESTIVAL_NOT_FOUND));
+
+        return this.eventRepository.findAllByOrderByCreatedDateDesc(festival)
+                .stream()
+                .map(this.eventMapper::toEventResponse)
+                .toList();
     }
+
+
+    @Override
+    public void deleteEvent(
+            final String festivalId,
+            final String eventId) {
+        Festival festival = festivalRepository.findById(festivalId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.FESTIVAL_NOT_FOUND));
+
+        Event event = eventRepository
+                .findByIdAndFestival(eventId, festival)
+                .orElseThrow(() -> new BusinessException(ErrorCode.ANNOUNCEMENT_NOT_FOUND));
+
+        eventRepository.delete(event);
+
+    }
+
+
 
 }

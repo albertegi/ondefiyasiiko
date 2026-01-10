@@ -1,5 +1,6 @@
 package com.alvirg.ondefiyasiiko.event;
 
+import com.alvirg.ondefiyasiiko.announcement.response.AnnouncementResponse;
 import com.alvirg.ondefiyasiiko.common.RestResponse;
 import com.alvirg.ondefiyasiiko.event.request.EventRequest;
 import com.alvirg.ondefiyasiiko.event.request.EventUpdateRequest;
@@ -50,8 +51,17 @@ public class EventController {
     }
 
     @GetMapping
+    //    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<EventResponse>> findAllEvents(){
         return ResponseEntity.ok(this.eventService.getAllEvents());
+    }
+
+    @GetMapping("/{festival-id}")
+    public ResponseEntity<List<EventResponse>> findAllEventsByFestival(
+            @PathVariable("festival-id") @P("festivalId")
+            String festivalId
+    ){
+        return ResponseEntity.ok(this.eventService.getAllEventsByFestival(festivalId));
     }
 
     @GetMapping("/{festival-id}/{event-id}")
@@ -63,13 +73,17 @@ public class EventController {
         return ResponseEntity.ok(this.eventService.getEventById(eventId, festivalId));
     }
 
-    @DeleteMapping("/{event-id}")
-    public ResponseEntity<Void> deleteTodoById(
-            @PathVariable("event-id") @P("eventId")
-            final String eventId){
-        this.eventService.deleteEvent(eventId);
-        return ResponseEntity.ok().build();
 
+    @DeleteMapping("/{festival-id}/{event-id}")
+//    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteEvent(
+            @PathVariable("festival-id") @P("festivalId")
+            String festivalId,
+            @PathVariable("event-id") @P("eventId")
+            String eventId
+    ) {
+        eventService.deleteEvent(festivalId, eventId);
+        return ResponseEntity.ok().build();
     }
 
 }

@@ -102,7 +102,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                 .stream()
                 .map(this.announcementMapper::toAnnouncementResponse)
                 .toList();
-
     }
 
     @Override
