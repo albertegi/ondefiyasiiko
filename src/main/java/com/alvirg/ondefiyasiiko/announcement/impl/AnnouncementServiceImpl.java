@@ -7,13 +7,12 @@ import com.alvirg.ondefiyasiiko.announcement.AnnouncementService;
 import com.alvirg.ondefiyasiiko.announcement.request.AnnouncementRequest;
 import com.alvirg.ondefiyasiiko.announcement.request.AnnouncementUpdateRequest;
 import com.alvirg.ondefiyasiiko.announcement.response.AnnouncementResponse;
-import com.alvirg.ondefiyasiiko.event.Event;
 import com.alvirg.ondefiyasiiko.exception.BusinessException;
 import com.alvirg.ondefiyasiiko.exception.ErrorCode;
 import com.alvirg.ondefiyasiiko.festival.Festival;
 import com.alvirg.ondefiyasiiko.festival.FestivalRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,22 +64,61 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public AnnouncementResponse getAnnouncementById(String announcementId) {
-        return this.announcementRepository.findById(announcementId)
+    @Transactional(readOnly = true)
+    public AnnouncementResponse getAnnouncementById(
+            final String announcementId,
+            final String festivalId) {
+
+        Festival festival = festivalRepository.findById(festivalId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.FESTIVAL_NOT_FOUND));
+
+        return this.announcementRepository
+                .findByIdAndFestival(announcementId, festival)
                 .map(this.announcementMapper::toAnnouncementResponse)
                 .orElseThrow(()-> new BusinessException(ErrorCode.ANNOUNCEMENT_NOT_FOUND));
     }
 
+
     @Override
+    @Transactional(readOnly = true)
     public List<AnnouncementResponse> getAllAnnouncement() {
-        return this.announcementRepository.findAllByOrderByCreatedDateDesc()
+        return announcementRepository.findAll(Sort.by("createdDate").descending())
                 .stream()
-                .map(this.announcementMapper::toAnnouncementResponse)
+                .map(announcementMapper::toAnnouncementResponse)
                 .toList();
     }
 
+
+
     @Override
-    public void deleteAnnouncement(String AnnouncementId) {
-        this.announcementRepository.deleteById(AnnouncementId);
+    @Transactional(readOnly = true)
+    public List<AnnouncementResponse> getAllAnnouncementByFestival(
+            String festivalId
+    ) {
+        Festival festival = festivalRepository.findById(festivalId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.FESTIVAL_NOT_FOUND));
+
+        return this.announcementRepository.findAllByOrderByCreatedDateDesc(festival)
+                .stream()
+                .map(this.announcementMapper::toAnnouncementResponse)
+                .toList();
+
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public void deleteAnnouncement(
+            final String festivalId,
+            final String AnnouncementId) {
+
+        Festival festival = festivalRepository.findById(festivalId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.FESTIVAL_NOT_FOUND));
+
+        Announcement announcement = announcementRepository
+                .findByIdAndFestival(AnnouncementId, festival)
+                .orElseThrow(() -> new BusinessException(ErrorCode.ANNOUNCEMENT_NOT_FOUND));
+
+        announcementRepository.delete(announcement);
+    }
+
 }

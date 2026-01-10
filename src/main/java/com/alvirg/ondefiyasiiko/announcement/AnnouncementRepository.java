@@ -10,9 +10,8 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Stri
 
 //    Optional<Announcement> findByTitleAndContent(String title, String content);
 
-    List<Announcement> findAllByOrderByCreatedDateDesc();
+    List<Announcement> findAllByOrderByCreatedDateDesc(Festival festival);
 
-    Optional<Announcement> findByIdAndFestival(String announcementId, Festival festival);
 
     boolean existsByFestivalAndTitleAndContentAndIdNot(
             Festival festival,
@@ -21,4 +20,5 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Stri
             String id
     );
 
+    Optional<Announcement> findByIdAndFestival(String announcementId, Festival festival);
 }

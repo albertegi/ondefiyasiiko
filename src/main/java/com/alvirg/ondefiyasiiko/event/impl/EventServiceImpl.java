@@ -11,10 +11,8 @@ import com.alvirg.ondefiyasiiko.exception.BusinessException;
 import com.alvirg.ondefiyasiiko.exception.ErrorCode;
 import com.alvirg.ondefiyasiiko.festival.Festival;
 import com.alvirg.ondefiyasiiko.festival.FestivalRepository;
-import com.alvirg.ondefiyasiiko.festival.FestivalService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,12 +67,6 @@ public class EventServiceImpl implements EventService {
                 .orElseThrow(()-> new EntityNotFoundException("No event found with the ID " + eventId
                 ));
     }
-
-
-//    private Event checkAndReturnEvent(String eventId) {
-//        return this.eventRepository.findById(eventId)
-//                .orElseThrow(()-> new EntityNotFoundException("No event found with the ID:"+ eventId));
-//    }
 
 
     @Override

@@ -2,7 +2,9 @@ package com.alvirg.ondefiyasiiko.announcement;
 
 import com.alvirg.ondefiyasiiko.announcement.request.AnnouncementRequest;
 import com.alvirg.ondefiyasiiko.announcement.request.AnnouncementUpdateRequest;
+import com.alvirg.ondefiyasiiko.announcement.response.AnnouncementResponse;
 import com.alvirg.ondefiyasiiko.common.RestResponse;
+import com.alvirg.ondefiyasiiko.event.response.EventResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/announcement")
@@ -49,4 +53,45 @@ public class AnnouncementController {
         );
         return ResponseEntity.accepted().build();
     }
+
+    @GetMapping("/{festival-id}/{announcement-id}")
+    public ResponseEntity<AnnouncementResponse> getAnnouncementById(
+            @PathVariable("announcement-id") @P("announcementId")
+            String announcementId,
+            @PathVariable("festival-id") @P("festivalId")
+            String festivalId){
+        return ResponseEntity.ok(this.announcementService.getAnnouncementById(announcementId, festivalId));
+    }
+
+    @GetMapping("/{festival-id}")
+    public ResponseEntity<List<AnnouncementResponse>> findAllAnnouncementsByFestival(
+            @PathVariable("festival-id") @P("festivalId")
+            String festivalId
+    ){
+        return ResponseEntity.ok(this.announcementService.getAllAnnouncementByFestival(festivalId));
+    }
+
+    @GetMapping
+//    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<AnnouncementResponse>> getAllAnnouncements() {
+        return ResponseEntity.ok(announcementService.getAllAnnouncement());
+    }
+
+    @DeleteMapping("/{festival-id}/{announcement-id}")
+//    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteAnnouncement(
+            @PathVariable("festival-id") @P("festivalId")
+            String festivalId,
+            @PathVariable("announcement-id") @P("announcementId")
+            String announcementId
+    ) {
+        announcementService.deleteAnnouncement(festivalId, announcementId);
+        return ResponseEntity.ok().build();
+    }
+
+
+
+
+
+
 }
