@@ -54,7 +54,7 @@ public class AnnouncementController {
         return ResponseEntity.accepted().build();
     }
 
-    @GetMapping("/{festival-id}/{announcement-id}")
+    @GetMapping("{announcement-id}/{festival-id}/")
     public ResponseEntity<AnnouncementResponse> getAnnouncementById(
             @PathVariable("announcement-id") @P("announcementId")
             String announcementId,

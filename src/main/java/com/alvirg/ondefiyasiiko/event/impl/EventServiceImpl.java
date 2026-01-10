@@ -61,8 +61,14 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventResponse getEventById(final String eventId) {
-        return this.eventRepository.findById(eventId)
+    public EventResponse getEventById(
+            final String eventId,
+            final String festivalId) {
+
+        Festival festival = festivalRepository.findById(festivalId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.FESTIVAL_NOT_FOUND));
+
+        return this.eventRepository.findByIdAndFestival(eventId, festival)
                 .map(this.eventMapper::toEventResponse)
                 .orElseThrow(()-> new EntityNotFoundException("No event found with the ID " + eventId
                 ));

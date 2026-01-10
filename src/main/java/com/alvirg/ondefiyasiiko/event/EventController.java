@@ -54,11 +54,13 @@ public class EventController {
         return ResponseEntity.ok(this.eventService.getAllEvents());
     }
 
-    @GetMapping("/{event-id}")
+    @GetMapping("/{festival-id}/{event-id}")
     public ResponseEntity<EventResponse> findEventById(
             @PathVariable("event-id") @P("eventId")
-            String eventId){
-        return ResponseEntity.ok(this.eventService.getEventById(eventId));
+            String eventId,
+            @PathVariable("festival-id") @P("festivalId")
+            String festivalId){
+        return ResponseEntity.ok(this.eventService.getEventById(eventId, festivalId));
     }
 
     @DeleteMapping("/{event-id}")
