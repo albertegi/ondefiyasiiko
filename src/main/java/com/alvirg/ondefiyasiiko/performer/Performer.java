@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @Getter
@@ -21,22 +23,38 @@ import lombok.experimental.SuperBuilder;
 public class Performer extends BaseEntity {
 
 
-    @Column(name = "STAGE_NAME", nullable = false)
-    private String stageName;
-    @Column(name = "CONTACT_PERSON", nullable = false)
-    private String contactPerson;
-    @Column(name = "EMAIL", nullable = false, unique = true)
+    @Column(name = "NAME", nullable = false)
+    private String name;
+
+    @Column(name = "EMAIL", nullable = false)
     private String email;
-    @Column(name = "PHONE_NUMBER", nullable = false, unique = true)
-    private String phone;
 
-    private String performanceType;
+    @Column(name = "PHONE_NUMBER", nullable = false)
+    private String phoneNumber;
 
-    @Column(length = 2000)
-    private String notes;
+    @Column(name = "PERFORMANCE_TYPE", nullable = false)
+    private String performanceType; // MUSIC, DANCE, POETRY, OTHER
+
+    @Column(name = "DESCRIPTION", length = 2000)
+    private String description;
+
+    @Column(name = "EQUIPMENT", length = 1000)
+    private String equipment;
+
+    @Column(name = "DURATION", nullable = false)
+    private Integer duration; // in minutes
+
+    @Column(name = "PREVIOUS_EXPERIENCE", length = 1000)
+    private String previousExperience;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(nullable = false)
+    private String status = "PENDING"; // PENDING, APPROVED, REJECTED
 
     @Enumerated(EnumType.STRING)
-    private ApplicationStatus status = ApplicationStatus.PENDING;
+    private ApplicationStatus performerStatus = ApplicationStatus.PENDING;
 
     @ManyToOne
     @JoinColumn(name = "festival_id", nullable = false)
