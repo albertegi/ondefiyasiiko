@@ -34,5 +34,5 @@ public class PerformerRequest {
 
     @Enumerated(EnumType.STRING)
     private ApplicationStatus performerStatus = ApplicationStatus.PENDING; // PENDING, APPROVED, REJECTED
-    private Festival festival;
+    private String festivalId;
 }
