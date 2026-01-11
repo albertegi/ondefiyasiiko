@@ -1,12 +1,13 @@
 package com.alvirg.ondefiyasiiko.performer;
 
 import com.alvirg.ondefiyasiiko.performer.request.PerformerRequest;
+import com.alvirg.ondefiyasiiko.performer.response.PerformerResponse;
 
 import java.util.List;
 
 public interface PerformerService {
 
     String registerPerformer(PerformerRequest request);
-    List<Performer> getAllPerformers();
-    List<Performer> getPerformersByStatus(String status);
+    List<PerformerResponse> getAllPerformers();
+    List<PerformerResponse> getPerformersByStatus(String status);
 }

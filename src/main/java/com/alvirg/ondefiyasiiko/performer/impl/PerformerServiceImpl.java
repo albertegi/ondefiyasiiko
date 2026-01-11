@@ -10,7 +10,9 @@ import com.alvirg.ondefiyasiiko.performer.Performer;
 import com.alvirg.ondefiyasiiko.performer.PerformerMapper;
 import com.alvirg.ondefiyasiiko.performer.PerformerService;
 import com.alvirg.ondefiyasiiko.performer.request.PerformerRequest;
+import com.alvirg.ondefiyasiiko.performer.response.PerformerResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,16 +33,22 @@ public class PerformerServiceImpl implements PerformerService {
         final Performer performer = this.performerMapper.toPerformer(request);
         performer.setFestival(festival);
         return this.peformerRepository.save(performer).getId();
+    }
+
+    @Override
+    public List<PerformerResponse> getAllPerformers() {
+        return this.peformerRepository.findAll(Sort.by("createdDate").descending())
+                .stream()
+                .map(this.performerMapper::toPerformerResponse)
+                .toList();
 
     }
 
     @Override
-    public List<Performer> getAllPerformers() {
-        return List.of();
-    }
-
-    @Override
-    public List<Performer> getPerformersByStatus(String status) {
-        return List.of();
+    public List<PerformerResponse> getPerformersByStatus(String status) {
+        return this.peformerRepository.findByStatusOrderByCreatedDateDesc(status)
+                .stream()
+                .map(this.performerMapper::toPerformerResponse)
+                .toList();
     }
 }
