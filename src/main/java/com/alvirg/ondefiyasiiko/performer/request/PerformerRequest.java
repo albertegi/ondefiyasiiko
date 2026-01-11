@@ -4,9 +4,15 @@ import com.alvirg.ondefiyasiiko.common.ApplicationStatus;
 import com.alvirg.ondefiyasiiko.festival.Festival;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class PerformerRequest {
 
     @NotBlank(message = "VALIDATION.PERFORMER.NAME.NOT_BLANK")

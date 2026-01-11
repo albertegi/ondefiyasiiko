@@ -5,7 +5,13 @@ import com.alvirg.ondefiyasiiko.festival.Festival;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class PerformerResponse {
     private String id;
     private String name;
