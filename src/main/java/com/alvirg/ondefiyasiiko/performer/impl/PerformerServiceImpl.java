@@ -10,6 +10,7 @@ import com.alvirg.ondefiyasiiko.performer.Performer;
 import com.alvirg.ondefiyasiiko.performer.PerformerMapper;
 import com.alvirg.ondefiyasiiko.performer.PerformerService;
 import com.alvirg.ondefiyasiiko.performer.request.PerformerRequest;
+import com.alvirg.ondefiyasiiko.performer.request.StatusUpdateRequest;
 import com.alvirg.ondefiyasiiko.performer.response.PerformerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -51,4 +52,22 @@ public class PerformerServiceImpl implements PerformerService {
                 .map(this.performerMapper::toPerformerResponse)
                 .toList();
     }
+
+    @Override
+    public void updatePerformerStatus(StatusUpdateRequest request, String performerId) {
+        final Performer performerStatusToUpdate = peformerRepository
+                .findById(performerId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.PERFORMER_NOT_FOUND));
+
+        this.performerMapper.updateStatus(performerStatusToUpdate, request);
+        this.peformerRepository.save(performerStatusToUpdate);
+
+    }
+
+//    public Performer updatePerformerStatus(Long id, String status) {
+//        Performer performer = performerRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Performer not found"));
+//        performer.setStatus(status);
+//        return performerRepository.save(performer);
+//    }
 }

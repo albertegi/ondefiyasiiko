@@ -3,9 +3,11 @@ package com.alvirg.ondefiyasiiko.performer;
 import com.alvirg.ondefiyasiiko.common.ApplicationStatus;
 import com.alvirg.ondefiyasiiko.festival.Festival;
 import com.alvirg.ondefiyasiiko.performer.request.PerformerRequest;
+import com.alvirg.ondefiyasiiko.performer.request.StatusUpdateRequest;
 import com.alvirg.ondefiyasiiko.performer.response.PerformerResponse;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,5 +37,14 @@ public class PerformerMapper {
                 .previousExperience(performer.getPreviousExperience())
                 .performerStatus(performer.getPerformerStatus())
                 .build();
+    }
+
+    public void updateStatus(Performer performerStatusToUpdate, StatusUpdateRequest request) {
+
+        if (request.getPerformerStatus() != null &&
+                performerStatusToUpdate.getPerformerStatus() != request.getPerformerStatus()) {
+
+            performerStatusToUpdate.setPerformerStatus(request.getPerformerStatus());
+        }
     }
 }
